@@ -1,0 +1,49 @@
+let p0 = of_list []
+let p1 = of_list [0;1]
+defausse 9 p0;;
+pioche p1;;
+- : int option = Some 0
+pioche p1;;
+- : int option = Some 1
+defausse 9 p0;;
+pioche p0;;
+- : int option = Some 9
+pioche p0;;
+- : int option = Some 9
+pioche p0;;
+- : int option = None
+defausse 4 p1;;
+defausse 5 p1;;
+pioche p0;;
+- : int option = None
+pioche p1;;
+- : int option = Some 5
+defausse 0 p1;;
+defausse 0 p1;;
+pioche p0;;
+- : int option = None
+pioche p0;;
+- : int option = None
+defausse 7 p1;;
+defausse 1 p0;;
+pioche p0;;
+- : int option = Some 1
+defausse 7 p1;;
+pioche p1;;
+- : int option = Some 7
+pioche p0;;
+- : int option = None
+defausse 5 p0;;
+pioche p1;;
+- : int option = Some 7
+defausse 0 p1;;
+defausse 3 p0;;
+defausse 8 p1;;
+defausse 6 p0;;
+pioche p1;;
+- : int option = Some 8
+pioche p1;;
+- : int option = Some 0
+pioche p0;;
+- : int option = Some 6
+defausse 3 p0;;

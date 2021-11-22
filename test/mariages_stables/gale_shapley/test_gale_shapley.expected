@@ -1,0 +1,25 @@
+EXEMPLE Knuth pages 12 et 22-26
+ENTREE {
+  n=4
+  A : c,b,d,a
+  B : b,a,c,d
+  C : b,d,a,c
+  D : c,a,d,b
+  a : A,B,D,C
+  b : C,A,D,B
+  c : C,B,D,A
+  d : B,A,C,D
+}
+CONFIGURATION {
+  A1 B1 C0 D0
+  a? bC cD d?
+}
+CONFIGURATION {
+  A2 B1 C0 D0
+  aB bC cD d?
+}
+CONFIGURATION {
+  A2 B1 C0 D0
+  aB bC cD dA
+}
+SORTIE { Ad Ba Cb Dc }

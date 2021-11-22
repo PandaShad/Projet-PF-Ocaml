@@ -1,0 +1,5 @@
+(test 
+  (name test_gale_shapley)
+  (libraries mariages_stables mariages_stables_exemple)
+  (modules test_gale_shapley)
+)

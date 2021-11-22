@@ -1,0 +1,5 @@
+(test 
+  (name test_knuth)
+  (libraries mariages_stables mariages_stables_exemple)
+  (modules test_knuth)
+)

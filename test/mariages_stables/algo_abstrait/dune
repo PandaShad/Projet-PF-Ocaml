@@ -1,0 +1,5 @@
+(test 
+  (name test_algo_abstrait)
+  (libraries mariages_stables mariages_stables_exemple)
+  (modules test_algo_abstrait)
+)

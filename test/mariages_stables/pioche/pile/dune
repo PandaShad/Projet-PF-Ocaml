@@ -1,0 +1,5 @@
+(test 
+  (name test_pile)
+  (libraries mariages_stables testeur_de_pioche)
+  (modules test_pile)
+)

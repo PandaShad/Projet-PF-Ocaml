@@ -1,0 +1,5 @@
+(library
+ (name testeur_de_pioche)
+ (libraries mariages_stables)
+ (modules testeur)
+)
