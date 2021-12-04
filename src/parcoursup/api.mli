@@ -51,7 +51,7 @@ val ajoute_voeu : session -> rang_repondeur: int option -> nom_candidat: string 
     Si on appelle deux fois ajoute_voeu pour un même candidat et une même formation,
     c'est le rang utilisé au second appel qui est retenu 
     (autrement dit, le candidat peut modifier le classement de ses voeux).
-    On suppose pour simplifier que cette fonction n'est appelée pas appelée
+    On suppose pour simplifier que cette fonction n'est pas appelée
     durant la phase d'appel (les candidats ne modifient pas leurs voeux ni
     leur répondeur automatique une fois la phase d'appel démarée).
     Un voeu pour lequel un rang n'a pas été exprimé est un voeu avec un rang "infini"

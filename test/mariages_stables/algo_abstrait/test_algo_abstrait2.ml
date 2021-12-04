@@ -23,8 +23,10 @@ module Pioche_aleatoire : PIOCHE = struct
     in essaie deb true
   let defausse x p = 
     for i=0 to Array.length p - 1 do
-      if fst p.(i) = x then p.(i) <- (x, true);
-      Format.printf "defausse %s\n" (string_of_homme i)
+      if fst p.(i) = x then begin
+        p.(i) <- (x, true);
+        Format.printf "defausse %s\n" (string_of_homme i)
+      end
     done
 end
 

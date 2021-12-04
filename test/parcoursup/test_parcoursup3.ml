@@ -24,10 +24,10 @@ let () =
     ~nom_formation:"Université de Toulon";
   ajoute_commission session 
     ~nom_formation:"Université Côte d'Azur" 
-    ["Adam;Béatrice"]; 
+    ["Adam";"Béatrice"]; 
     ajoute_commission session 
     ~nom_formation:"Université de Toulon" 
-    ["Adam;Béatrice"]; 
+    ["Adam";"Béatrice"]; 
   reunit_commissions session;
   nouveau_jour session;
   affiche_voeux_en_attente session "Adam";

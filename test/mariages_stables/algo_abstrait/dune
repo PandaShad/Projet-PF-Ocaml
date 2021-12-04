@@ -3,3 +3,8 @@
   (libraries mariages_stables mariages_stables_exemple)
   (modules test_algo_abstrait)
 )
+(test 
+  (name test_algo_abstrait2)
+  (libraries mariages_stables mariages_stables_exemple)
+  (modules test_algo_abstrait2)
+)

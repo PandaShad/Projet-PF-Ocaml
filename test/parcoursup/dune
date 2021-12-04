@@ -4,7 +4,7 @@
   (modules test_parcoursup_utils)
 )
 (tests
-  (names test_parcoursup1 test_parcoursup2 test_parcoursup3)
+  (names test_parcoursup1 test_parcoursup2 test_parcoursup3 test_perso_parcoursup1)
   (libraries test_parcoursup_utils parcoursup)
-  (modules test_parcoursup1 test_parcoursup2 test_parcoursup3)
+  (modules test_parcoursup1 test_parcoursup2 test_parcoursup3 test_perso_parcoursup1)
 )
