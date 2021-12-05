@@ -1,0 +1,31 @@
+nouvelle session
+ajoute candidat Maxime
+ajoute candidat Ghouti
+ajoute candidat Rami
+ajoute formation Université Côte d'Azur (2 places)
+ajoute formation Université de Toulon (1 places)
+ajoute voeu de Maxime pour Université Côte d'Azur
+ajoute voeu de Maxime pour Université de Toulon (rang=1)
+ajoute voeu de Ghouti pour Université Côte d'Azur (rang=2)
+ajoute voeu de Ghouti pour Université de Toulon (rang=1)
+ajoute voeu de Rami pour Université Côte d'Azur (rang=1)
+ajoute voeu de Rami pour Université de Toulon (rang=1)
+commission de classement de Université Côte d'Azur : [Ghouti; Maxime; Rami]
+commission de classement de Université de Toulon : [Ghouti; Maxime; Rami]
+réunit commissions
+nouveau jour
+Voeux en attente de Maxime : {Université de Toulon(0)}
+Propositions en attente de Maxime : {Université Côte d'Azur}
+Voeux en attente de Ghouti : {}
+Propositions en attente de Ghouti : {Université de Toulon}
+Voeux en attente de Rami : {Université Côte d'Azur(0), Université de Toulon(1)}
+Propositions en attente de Rami : {}
+Maxime renonce à Université Côte d'Azur
+Ghouti renonce à Université de Toulon
+nouveau jour
+Voeux en attente de Maxime : {}
+Propositions en attente de Maxime : {Université de Toulon}
+Voeux en attente de Ghouti : {}
+Propositions en attente de Ghouti : {}
+Voeux en attente de Rami : {Université de Toulon(0)}
+Propositions en attente de Rami : {Université Côte d'Azur}
