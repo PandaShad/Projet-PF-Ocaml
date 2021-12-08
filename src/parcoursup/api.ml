@@ -26,13 +26,7 @@ type session = {
 
 let nouvelle_session () = {candidats = [||] ; formations = [||]}
 
-(*********************** FONCTIONS DE LA PHASE DE CONFIGURATION *********************)
-
-let ajoute_candidat session ~nom_candidat =
-  session.candidats <- Array.append session.candidats [|{name = nom_candidat ; voeux = [||] ; propositions = [||]}|]
-
-let ajoute_formation session ~nom_formation ~capacite =
-  session.formations <- Array.append session.formations [|{name = nom_formation ; places_restantes = capacite ; preference = [||] ; rang_appel = 0; commision = None}|]
+(*********************** QUELQUES FONCTIONS UTILITAIRES *********************)
 
 let get_formation session nom_formation =
   let rec iter i = match session.formations.(i).name with
@@ -56,6 +50,21 @@ let get_voeux session nom_candidat nom_formation =
   in
   iter 0;;
 
+let rec quick l cmp = 
+  match l with
+  | [] -> []
+  | [x] -> [x]
+  | hd :: tl -> 
+    (match List.partition (fun x -> cmp ~candidat1:x ~candidat2:hd) tl with
+      | l1, l2 -> (quick l1 cmp) @ [hd] @ (quick l2 cmp))
+
+(*********************** FONCTIONS DE LA PHASE DE CONFIGURATION *********************)
+
+let ajoute_candidat session ~nom_candidat =
+  session.candidats <- Array.append session.candidats [|{name = nom_candidat ; voeux = [||] ; propositions = [||]}|]
+
+let ajoute_formation session ~nom_formation ~capacite =
+  session.formations <- Array.append session.formations [|{name = nom_formation ; places_restantes = capacite ; preference = [||] ; rang_appel = 0; commision = None}|]
 
 let ajoute_voeu session ~rang_repondeur ~nom_candidat ~nom_formation = (* AJOUTER UNE METHODE POUR TRIER LE TABLEAUX DE VOEUX PAR RANG *)
   (* let formation = get_formation session nom_formation in *)
@@ -107,14 +116,6 @@ let ajoute_commission session ~nom_formation ~fonction_comparaison = (* TRIE SEU
           if (fonction_comparaison session.candidats.(i).name formation.preference.(y)) *)
 
 (************************** FONCTION REUNIT COMMISSIONS **********************)
-
-let rec quick l cmp = 
-  match l with
-  | [] -> []
-  | [x] -> [x]
-  | hd :: tl -> 
-    (match List.partition (fun x -> cmp ~candidat1:x ~candidat2:hd) tl with
-      | (l1, l2) -> (quick l1 cmp) @ [hd] @ (quick l2 cmp))
 
 let reunit_commissions session =
   let n = Array.length session.formations in
@@ -177,24 +178,20 @@ let renonce session ~nom_candidat ~nom_formation =
       for y = 0 to ((Array.length session.candidats.(i).propositions)-1) do 
         sting_list_proposition :=  !sting_list_proposition @ [session.candidats.(i).propositions.(y).voeux_name]
       done;
+      let formation = get_formation session nom_formation in
       if List.mem nom_formation !sting_list_proposition then begin
         session.candidats.(i).propositions <- Array.of_list(List.filter (fun p -> not(String.equal p.voeux_name nom_formation)) (Array.to_list(session.candidats.(i).propositions)));
-        let formation = get_formation session nom_formation in
         formation.places_restantes <- formation.places_restantes + 1;
-      end
+      end;
     | _ -> iter (i+1)
   in iter 0
 
 let nouveau_jour session =
-  for i = 0 to ((Array.length session.formations)-1) do 
+  for i = 0 to ((Array.length session.formations)-1) do
     let formation = session.formations.(i) in
-    let n = ref 0 in
-    begin match (Array.length formation.preference) with
-      | x when x > formation.places_restantes + formation.rang_appel -> n := formation.rang_appel + formation.places_restantes
-      | _ -> n := Array.length formation.preference
-    end;
-    for y = formation.rang_appel to !n-1 do
-      let candidat = get_candidat session formation.preference.(y) in
+    while ((formation.places_restantes != 0) && (formation.rang_appel < Array.length formation.preference)) do
+      let rang_appel = formation.rang_appel in
+      let candidat = get_candidat session formation.preference.(rang_appel) in
       let string_voeux_list = ref [] in
       for j = 0 to ((Array.length candidat.voeux)-1) do 
         string_voeux_list := !string_voeux_list @ [candidat.voeux.(j).voeux_name]
@@ -215,20 +212,20 @@ let nouveau_jour session =
             | _ -> if(Array.length candidat.voeux) > (k+1) then renonce_voeux_de_plus_haut_rang (k+1)
           in renonce_voeux_de_plus_haut_rang 0
         end;
-        if (Array.length candidat.propositions) >= 1 then begin 
+        if (Array.length candidat.propositions) > 1 then begin 
           let rec renonce_proposition_de_plus_haut_rang k = match candidat.propositions.(k) with
-            | p when ((p.rang_repondeur > voeux_qui_propose.rang_repondeur) || ((p.rang_repondeur = None) && voeux_qui_propose.rang_repondeur != None))->
+            | p when ((p.rang_repondeur > voeux_qui_propose.rang_repondeur) || ((p.rang_repondeur   = None) && voeux_qui_propose.rang_repondeur != None))->
               let formation_renonce = get_formation session p.voeux_name in
               renonce session ~nom_candidat:candidat.name ~nom_formation:formation_renonce.name;
-              formation_renonce.preference <- Array.of_list(List.filter (fun p -> not(String.equal p candidat.name)) (Array.to_list formation_renonce.preference));
+              (* formation_renonce.preference <- Array.of_list(List.filter (fun p -> not(String.equal p candidat.name)) (Array.to_list formation_renonce.preference)); *)
               if (Array.length candidat.propositions > 1) then renonce_proposition_de_plus_haut_rang k
             | _ -> if(Array.length candidat.propositions) > (k+1) then renonce_proposition_de_plus_haut_rang (k+1)
             in renonce_proposition_de_plus_haut_rang 0
         end;
-        formation.rang_appel <- formation.rang_appel + 1;
-        formation.places_restantes <- formation.places_restantes - 1
+        formation.places_restantes <- formation.places_restantes - 1;
+        formation.rang_appel <- formation.rang_appel + 1
       end;
-    done
+    done;
   done
 
 let consulte_propositions session ~nom_candidat =
@@ -252,13 +249,7 @@ let consulte_voeux_en_attente session ~nom_candidat =
       match formation.preference.(i) with
         | s when String.equal s nom_candidat ->
           if i = formation.rang_appel then 0 
-          else begin
-            if i-formation.rang_appel < 0 then begin
-            formation.rang_appel <- formation.rang_appel + (i-formation.rang_appel);
-            0
-            end
-            else (i-formation.rang_appel)
-          end
+          else (i-formation.rang_appel)
         | _ -> aux2 (i+1)
       in
       (hd.voeux_name, aux2 0) :: aux tl

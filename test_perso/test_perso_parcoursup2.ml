@@ -52,9 +52,9 @@ let () =
     affiche_propositions_en_attente session "Ghouti";
     affiche_voeux_en_attente session "Rami";
     affiche_propositions_en_attente session "Rami";
-    renonce session 
+    (* renonce session 
         ~nom_candidat:"Maxime" 
-        ~nom_formation:"Université Côte d'Azur";
+        ~nom_formation:"Université Côte d'Azur"; *)
     renonce session 
         ~nom_candidat:"Ghouti" 
         ~nom_formation:"Université de Toulon";

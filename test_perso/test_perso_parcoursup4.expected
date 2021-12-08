@@ -1,0 +1,16 @@
+nouvelle session
+ajoute candidat Adam
+ajoute formation Université Côte d'Azur (7 places)
+ajoute formation Université de Toulon (2 places)
+ajoute voeu de Adam pour Université Côte d'Azur (rang=1)
+ajoute voeu de Adam pour Université de Toulon (rang=0)
+commission de classement de Université Côte d'Azur : [Adam]
+commission de classement de Université de Toulon : [Adam]
+réunit commissions
+nouveau jour
+Voeux en attente de Adam : {}
+Propositions en attente de Adam : {Université de Toulon}
+Adam renonce à Université de Toulon
+nouveau jour
+Voeux en attente de Adam : {}
+Propositions en attente de Adam : {}
